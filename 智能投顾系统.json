@@ -1,0 +1,1795 @@
+{
+    "url": "http://localhost:8080/login?username=john_doe&password=password123",
+    "code": "# -*- coding: utf-8 -*-\nfrom loguru import logger\nfrom webrunnercore import wr #wr模块是webrunner内置的脚本增强sdk\nfrom webrunnercore import *\n\n\n\nclass 测试负载(WebLoadMachine):\n    '''\n    用户自定义负载信息\n    '''\n    负载名称 = '默认负载'\n\n    测试机 = [\n        {\n            \"ip地址\": '118.202.10.218',\n            \"端口\": 50000,\n            \"节点数\": 1,\n            \"主节点\": True\n        },\n    ]\n\nclass 测试场景(WebScenario):\n    '''\n    用户自定义场景信息\n    '''\n    场景名称 = '默认场景'\n\n    模式 = '梯形负载'\n    参数 = {\n        '用户数': 50,\n        '创建速率': 10,\n        '运行时长': 300\n    }\n\n\n\nclass Transaction_Login(SerialTransaction):\n    '''\n    事务定义, 一个事务由多个task构成, 每个task只包含一个请求\n    '''\n\n    def __init__(self, parent: \"User\") -> None:\n        super().__init__(parent)\n\n    @property\n    def transaction(self):\n        # 事务名称\n        return \"login\"\n\n    def on_start(self):\n        # 事务启动函数\n        super().on_start()\n    \n    @task\n    def task_0(self):\n        url = \"http://localhost:8080/login\"\n        headers = {'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'zh-CN,zh;q=0.9', 'Connection': 'keep-alive', 'Host': 'localhost:8080', 'Origin': 'http://localhost:5173', 'Referer': 'http://localhost:5173/', 'Sec-Fetch-Dest': 'empty', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Site': 'same-site', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36', 'sec-ch-ua': '\"Not.A/Brand\";v=\"8\", \"Chromium\";v=\"114\"', 'sec-ch-ua-mobile': '?0', 'sec-ch-ua-platform': '\"Windows\"'}\n        params = {}\n        params['username']='john_doe'\n        params['password']='password123'\n        # null\n        data = None\n        res = self.get(url, headers=headers, params=params, data=data)\n        # application/json,res.json()\n\n\n    def on_stop(self):\n        # 事务结束函数\n        super().on_stop()\n\n\nclass Transaction_Fundresearch(SerialTransaction):\n    '''\n    事务定义, 一个事务由多个task构成, 每个task只包含一个请求\n    '''\n\n    def __init__(self, parent: \"User\") -> None:\n        super().__init__(parent)\n\n    @property\n    def transaction(self):\n        # 事务名称\n        return \"fundResearch\"\n\n    def on_start(self):\n        # 事务启动函数\n        super().on_start()\n    \n    @task\n    def task_1(self):\n        url = \"http://localhost:5173/src/views/FundResearch.vue\"\n        headers = {'Accept': '*/*', 'Accept-Language': 'zh-CN,zh;q=0.9', 'Connection': 'keep-alive', 'Host': 'localhost:5173', 'Origin': 'http://localhost:5173', 'Referer': 'http://localhost:5173/src/views/FundResearch.vue', 'Sec-Fetch-Dest': 'script', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Site': 'same-origin', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36', 'sec-ch-ua': '\"Not.A/Brand\";v=\"8\", \"Chromium\";v=\"114\"', 'sec-ch-ua-mobile': '?0', 'sec-ch-ua-platform': '\"Windows\"'}\n        params = {}\n        params['type']='style'\n        params['index']='0'\n        params['scoped']='54efbc23'\n        params['vue']=''\n        params['lang.css']=''\n        # null\n        data = None\n        res = self.get(url, headers=headers, params=params, data=data)\n        # text/javascript,res.text\n\n    \n    @task\n    def task_2(self):\n        url = \"http://localhost:8080/fund/checkInFOF\"\n        headers = {'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'zh-CN,zh;q=0.9', 'Connection': 'keep-alive', 'Host': 'localhost:8080', 'Origin': 'http://localhost:5173', 'Referer': 'http://localhost:5173/', 'Sec-Fetch-Dest': 'empty', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Site': 'same-site', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36', 'sec-ch-ua': '\"Not.A/Brand\";v=\"8\", \"Chromium\";v=\"114\"', 'sec-ch-ua-mobile': '?0', 'sec-ch-ua-platform': '\"Windows\"'}\n        params = {}\n        params['id']='1'\n        params['fundcode']='1001'\n        # null\n        data = None\n        res = self.get(url, headers=headers, params=params, data=data)\n        # application/json,res.json()\n\n\n    def on_stop(self):\n        # 事务结束函数\n        super().on_stop()\n\n\nclass Transaction_Factormanage(SerialTransaction):\n    '''\n    事务定义, 一个事务由多个task构成, 每个task只包含一个请求\n    '''\n\n    def __init__(self, parent: \"User\") -> None:\n        super().__init__(parent)\n\n    @property\n    def transaction(self):\n        # 事务名称\n        return \"factorManage\"\n\n    def on_start(self):\n        # 事务启动函数\n        super().on_start()\n    \n    @task\n    def task_3(self):\n        url = \"http://localhost:8080/factors/add\"\n        headers = {'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'zh-CN,zh;q=0.9', 'Connection': 'keep-alive', 'Content-Length': '118', 'Content-Type': 'application/json', 'Host': 'localhost:8080', 'Origin': 'http://localhost:5173', 'Referer': 'http://localhost:5173/', 'Sec-Fetch-Dest': 'empty', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Site': 'same-site', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36', 'sec-ch-ua': '\"Not.A/Brand\";v=\"8\", \"Chromium\";v=\"114\"', 'sec-ch-ua-mobile': '?0', 'sec-ch-ua-platform': '\"Windows\"'}\n        params = {}\n        # application/json (dict)\n        data = {}\n        data['dfname'] = 'yy'\n        data['id'] = 1\n        data['factornames'] = '52周新高,ROE,毛利率,历史波动率,市净率'\n        data['percents'] = '20,30,30,10,10'\n\n        res = self.post(url, headers=headers, params=params, json=data)\n        # application/json,res.json()\n\n\n    def on_stop(self):\n        # 事务结束函数\n        super().on_stop()\n\n\nclass Transaction_Strategymanage(SerialTransaction):\n    '''\n    事务定义, 一个事务由多个task构成, 每个task只包含一个请求\n    '''\n\n    def __init__(self, parent: \"User\") -> None:\n        super().__init__(parent)\n\n    @property\n    def transaction(self):\n        # 事务名称\n        return \"strategyManage\"\n\n    def on_start(self):\n        # 事务启动函数\n        super().on_start()\n    \n    @task\n    def task_4(self):\n        url = \"http://localhost:8080/strategy/save\"\n        headers = {'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'zh-CN,zh;q=0.9', 'Connection': 'keep-alive', 'Content-Length': '77', 'Content-Type': 'application/json', 'Host': 'localhost:8080', 'Origin': 'http://localhost:5173', 'Referer': 'http://localhost:5173/', 'Sec-Fetch-Dest': 'empty', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Site': 'same-site', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36', 'sec-ch-ua': '\"Not.A/Brand\";v=\"8\", \"Chromium\";v=\"114\"', 'sec-ch-ua-mobile': '?0', 'sec-ch-ua-platform': '\"Windows\"'}\n        params = {}\n        # application/json (list)\n        data = [None, None]\n        data[0] = {}\n        data[0]['id'] = 1\n        data[0]['fundcode'] = 1001\n        data[0]['percent'] = 60\n        data[1] = {}\n        data[1]['id'] = 1\n        data[1]['fundcode'] = 1002\n        data[1]['percent'] = 40\n\n        res = self.post(url, headers=headers, params=params, json=data)\n        # application/json,res.json()\n\n    \n    @task\n    def task_5(self):\n        url = \"http://localhost:8080/strategy/updateFofname\"\n        headers = {'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'zh-CN,zh;q=0.9', 'Connection': 'keep-alive', 'Content-Length': '25', 'Content-Type': 'application/json', 'Host': 'localhost:8080', 'Origin': 'http://localhost:5173', 'Referer': 'http://localhost:5173/', 'Sec-Fetch-Dest': 'empty', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Site': 'same-site', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36', 'sec-ch-ua': '\"Not.A/Brand\";v=\"8\", \"Chromium\";v=\"114\"', 'sec-ch-ua-mobile': '?0', 'sec-ch-ua-platform': '\"Windows\"'}\n        params = {}\n        # application/json (dict)\n        data = {}\n        data['id'] = 1\n        data['fofname'] = 'xxxx'\n\n        res = self.post(url, headers=headers, params=params, json=data)\n        # application/json,res.json()\n\n\n    def on_stop(self):\n        # 事务结束函数\n        super().on_stop()\n\n\nclass Transaction_Productmanage(SerialTransaction):\n    '''\n    事务定义, 一个事务由多个task构成, 每个task只包含一个请求\n    '''\n\n    def __init__(self, parent: \"User\") -> None:\n        super().__init__(parent)\n\n    @property\n    def transaction(self):\n        # 事务名称\n        return \"productManage\"\n\n    def on_start(self):\n        # 事务启动函数\n        super().on_start()\n    \n    @task\n    def task_6(self):\n        url = \"http://localhost:8080/product/all\"\n        headers = {'Accept': '*/*', 'Accept-Language': 'zh-CN,zh;q=0.9', 'Connection': 'keep-alive', 'Host': 'localhost:8080', 'Origin': 'http://localhost:5173', 'Referer': 'http://localhost:5173/', 'Sec-Fetch-Dest': 'empty', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Site': 'same-site', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36', 'sec-ch-ua': '\"Not.A/Brand\";v=\"8\", \"Chromium\";v=\"114\"', 'sec-ch-ua-mobile': '?0', 'sec-ch-ua-platform': '\"Windows\"'}\n        params = {}\n        params['id']='1'\n        # null\n        data = None\n        res = self.get(url, headers=headers, params=params, data=data)\n        # application/json,res.json()\n\n\n    def on_stop(self):\n        # 事务结束函数\n        super().on_stop()\n\n\nclass Transaction_Usermanage(SerialTransaction):\n    '''\n    事务定义, 一个事务由多个task构成, 每个task只包含一个请求\n    '''\n\n    def __init__(self, parent: \"User\") -> None:\n        super().__init__(parent)\n\n    @property\n    def transaction(self):\n        # 事务名称\n        return \"userManage\"\n\n    def on_start(self):\n        # 事务启动函数\n        super().on_start()\n    \n    @task\n    def task_7(self):\n        url = \"http://localhost:5173/src/views/UserManagement.vue\"\n        headers = {'Accept': '*/*', 'Accept-Language': 'zh-CN,zh;q=0.9', 'Connection': 'keep-alive', 'Host': 'localhost:5173', 'Origin': 'http://localhost:5173', 'Referer': 'http://localhost:5173/src/views/UserManagement.vue', 'Sec-Fetch-Dest': 'script', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Site': 'same-origin', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36', 'sec-ch-ua': '\"Not.A/Brand\";v=\"8\", \"Chromium\";v=\"114\"', 'sec-ch-ua-mobile': '?0', 'sec-ch-ua-platform': '\"Windows\"'}\n        params = {}\n        params['type']='style'\n        params['index']='0'\n        params['scoped']='18622dc2'\n        params['vue']=''\n        params['lang.css']=''\n        # null\n        data = None\n        res = self.get(url, headers=headers, params=params, data=data)\n        # text/javascript,res.text\n\n\n    def on_stop(self):\n        # 事务结束函数\n        super().on_stop()\n\n\nclass WebrunnerAction(BrowserAction):\n    '''\n    事务集合, 一个Action包含多个Transaction事务, @task装饰器参数表示事务混合比，\n    初始化事务 和 结束事务只执行一次， 执行事务按照混合比执行多次\n    '''\n    def __init__(self, parent: \"User\") -> None:\n        super().__init__(parent)\n\n    def on_start(self):\n        super().on_start()\n\n    @task(1)\n    @transaction(\"login\")\n    def task_login(self):\n        # 执行事务\n        Transaction_Login(self).run()\n\n    @task(1)\n    @transaction(\"fundResearch\")\n    def task_fundResearch(self):\n        # 执行事务\n        Transaction_Fundresearch(self).run()\n\n    @task(1)\n    @transaction(\"factorManage\")\n    def task_factorManage(self):\n        # 执行事务\n        Transaction_Factormanage(self).run()\n\n    @task(1)\n    @transaction(\"strategyManage\")\n    def task_strategyManage(self):\n        # 执行事务\n        Transaction_Strategymanage(self).run()\n\n    @task(1)\n    @transaction(\"productManage\")\n    def task_productManage(self):\n        # 执行事务\n        Transaction_Productmanage(self).run()\n\n    @task(1)\n    @transaction(\"userManage\")\n    def task_userManage(self):\n        # 执行事务\n        Transaction_Usermanage(self).run()\n\n    def on_stop(self):\n        super().on_stop()\n\n\nclass WebrunnerUser(CFastHttpUser):\n    '''\n    虚拟用户, 一个用户循环执行一个Action\n    '''\n    host = \"\"\n    tasks = [WebrunnerAction]\n\n\n\n    def __init__(self, *args, **kwargs) -> None:\n        super().__init__(*args, **kwargs)\n\n    def on_start(self):\n        # 所有虚拟用户创建完成后开始执行，主要用于定义参数化和检查点的策略\n\n        super().on_start()",
+    "version": "6.0",
+    "mode": "edit",
+    "app_mode": "WR",
+    "can_edit": true,
+    "template_path": null,
+    "protocol": [
+        {
+            "id": "GlobalSettings",
+            "children": [],
+            "name": "全局配置",
+            "cmdType": "GlobalSettings",
+            "type": 1,
+            "haveChild": false,
+            "input": {
+                "virtual_ip": {
+                    "enable": false,
+                    "name": "WLAN"
+                },
+                "save_raw_data": {
+                    "enable": false
+                }
+            }
+        },
+        {
+            "id": "webloadmachine",
+            "children": [],
+            "name": "默认负载",
+            "cmdType": "webloadmachine",
+            "type": 1,
+            "haveChild": false,
+            "input": {
+                "name": "默认负载",
+                "hosts": [
+                    {
+                        "ip": "118.202.10.218",
+                        "port": 50000,
+                        "is_master": true,
+                        "count": 1
+                    }
+                ]
+            }
+        },
+        {
+            "id": "webscenario",
+            "children": [],
+            "name": "默认场景",
+            "cmdType": "webscenario",
+            "type": 1,
+            "haveChild": false,
+            "input": {
+                "name": "默认场景",
+                "mode": "TLoadShape",
+                "params": {
+                    "run_time": 300,
+                    "spawn_rate": 10,
+                    "user_count": 50
+                }
+            }
+        },
+        {
+            "children": [
+                {
+                    "children": [
+                        {
+                            "children": [],
+                            "cmdType": "httpRequest",
+                            "haveChild": false,
+                            "id": "fd145259-1073-4eaa-82e2-7aeed0700ca3",
+                            "input": {
+                                "haritem": {
+                                    "pageref": "login",
+                                    "request": {
+                                        "method": "GET",
+                                        "url": "http://localhost:8080/login?username=john_doe&password=password123",
+                                        "httpVersion": "HTTP/1.1",
+                                        "cookies": [],
+                                        "headers": [
+                                            {
+                                                "name": "Accept",
+                                                "value": "application/json, text/plain, */*"
+                                            },
+                                            {
+                                                "name": "Accept-Language",
+                                                "value": "zh-CN,zh;q=0.9"
+                                            },
+                                            {
+                                                "name": "Connection",
+                                                "value": "keep-alive"
+                                            },
+                                            {
+                                                "name": "Host",
+                                                "value": "localhost:8080"
+                                            },
+                                            {
+                                                "name": "Origin",
+                                                "value": "http://localhost:5173"
+                                            },
+                                            {
+                                                "name": "Referer",
+                                                "value": "http://localhost:5173/"
+                                            },
+                                            {
+                                                "name": "Sec-Fetch-Dest",
+                                                "value": "empty"
+                                            },
+                                            {
+                                                "name": "Sec-Fetch-Mode",
+                                                "value": "cors"
+                                            },
+                                            {
+                                                "name": "Sec-Fetch-Site",
+                                                "value": "same-site"
+                                            },
+                                            {
+                                                "name": "User-Agent",
+                                                "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36"
+                                            },
+                                            {
+                                                "name": "sec-ch-ua",
+                                                "value": "\"Not.A/Brand\";v=\"8\", \"Chromium\";v=\"114\""
+                                            },
+                                            {
+                                                "name": "sec-ch-ua-mobile",
+                                                "value": "?0"
+                                            },
+                                            {
+                                                "name": "sec-ch-ua-platform",
+                                                "value": "\"Windows\""
+                                            }
+                                        ],
+                                        "queryString": [
+                                            {
+                                                "name": "username",
+                                                "value": "john_doe"
+                                            },
+                                            {
+                                                "name": "password",
+                                                "value": "password123"
+                                            }
+                                        ],
+                                        "headersSize": 545,
+                                        "bodySize": 0
+                                    },
+                                    "response": {
+                                        "status": 200,
+                                        "statusText": "",
+                                        "httpVersion": "HTTP/1.1",
+                                        "headers": [
+                                            {
+                                                "name": "Access-Control-Allow-Origin",
+                                                "value": "*"
+                                            },
+                                            {
+                                                "name": "Connection",
+                                                "value": "keep-alive"
+                                            },
+                                            {
+                                                "name": "Content-Type",
+                                                "value": "application/json"
+                                            },
+                                            {
+                                                "name": "Date",
+                                                "value": "Tue, 01 Jul 2025 15:08:37 GMT"
+                                            },
+                                            {
+                                                "name": "Keep-Alive",
+                                                "value": "timeout=60"
+                                            },
+                                            {
+                                                "name": "Transfer-Encoding",
+                                                "value": "chunked"
+                                            },
+                                            {
+                                                "name": "Vary",
+                                                "value": "Origin"
+                                            },
+                                            {
+                                                "name": "Vary",
+                                                "value": "Access-Control-Request-Method"
+                                            },
+                                            {
+                                                "name": "Vary",
+                                                "value": "Access-Control-Request-Headers"
+                                            }
+                                        ],
+                                        "content": {
+                                            "compression": 0,
+                                            "mimeType": "application/json",
+                                            "size": 1,
+                                            "text": "1"
+                                        },
+                                        "cookies": [],
+                                        "redirectURL": "",
+                                        "headersSize": 282,
+                                        "bodySize": 12
+                                    },
+                                    "cache": {},
+                                    "timings": {
+                                        "send": -1.0,
+                                        "receive": 1.421,
+                                        "wait": 3.807,
+                                        "connect": 0.344,
+                                        "ssl": 2.397,
+                                        "blocked": -1.0,
+                                        "dns": 0.008
+                                    },
+                                    "time": 7.976999999999999,
+                                    "serverIPAddress": "[::1]",
+                                    "startedDateTime": "2025-07-01T15:08:37.316Z"
+                                },
+                                "headers": [],
+                                "method": "GET",
+                                "queryString": [
+                                    {
+                                        "name": "username",
+                                        "value": "john_doe"
+                                    },
+                                    {
+                                        "name": "password",
+                                        "value": "password123"
+                                    }
+                                ],
+                                "postData": {},
+                                "url": "http://localhost:8080/login?username=john_doe&password=password123"
+                            },
+                            "name": "GET请求",
+                            "output": {
+                                "cmdId": "",
+                                "cmdName": ""
+                            },
+                            "type": 3
+                        }
+                    ],
+                    "cmdType": "task",
+                    "haveChild": true,
+                    "id": "c3e222b7-0eb2-4801-8dd6-38a3f916fa40",
+                    "input": {
+                        "name": "0"
+                    },
+                    "name": "任务",
+                    "type": 2,
+                    "output": {}
+                }
+            ],
+            "cmdType": "transaction",
+            "haveChild": true,
+            "id": "92862530-62cd-4ef5-8a37-d4328c0590cb",
+            "input": {
+                "mode": "SerialTransaction",
+                "name": "login",
+                "ratio": "1",
+                "type": "normal",
+                "enableWaitEvent": false,
+                "waitEvent": {
+                    "name": "wait",
+                    "ratio": 1,
+                    "timeout": 3000
+                },
+                "rpacodes": [
+                    "    time.sleep(1)\n    page = context.new_page()",
+                    "    time.sleep(1)\n    page.goto(\"http://localhost:5173/\")",
+                    "    time.sleep(1)\n    page.get_by_placeholder(\"请输入用户名\").click()",
+                    "    time.sleep(1)\n    page.get_by_placeholder(\"请输入用户名\").click()",
+                    "    time.sleep(1)\n    page.get_by_placeholder(\"请输入用户名\").fill(\"john_doe\")",
+                    "    time.sleep(1)\n    page.get_by_placeholder(\"请输入密码\").click()",
+                    "    time.sleep(1)\n    page.get_by_placeholder(\"请输入密码\").fill(\"password123\")",
+                    "    time.sleep(1)\n    page.get_by_role(\"button\", name=\"登录\").click()",
+                    "    time.sleep(1)\n    page.get_by_text(\"基金研究\").click()",
+                    "    time.sleep(1)\n    page.get_by_placeholder(\"基金代码\").click()",
+                    "    time.sleep(1)\n    page.get_by_placeholder(\"基金代码\").fill(\"1001\")",
+                    "    time.sleep(1)\n    page.get_by_role(\"button\", name=\"查询\").click()",
+                    "    time.sleep(1)\n    page.get_by_role(\"row\", name=\"1001 华夏成长基金 华夏基金 张伟 1000.0000 5.00 50.00 查看画像 删除\").get_by_role(\"button\", name=\"删除\").click()",
+                    "    time.sleep(1)\n    page.get_by_role(\"button\", name=\"删除\").click()",
+                    "    time.sleep(1)\n    page.get_by_role(\"row\", name=\"1001 华夏成长基金 华夏基金 张伟 1000.0000 5.00 50.00 查看画像 添加\").get_by_role(\"button\", name=\"添加\").click()",
+                    "    time.sleep(1)\n    page.get_by_role(\"row\", name=\"1002 南方创新基金 南方基金 李娜 2000.0000 8.00 160.00 查看画像 添加\").get_by_role(\"button\", name=\"添加\").click()",
+                    "    time.sleep(1)\n    page.get_by_role(\"row\", name=\"1001 华夏成长基金 华夏基金 张伟 1000.0000 5.00 50.00 查看画像 删除\").get_by_role(\"button\", name=\"查看画像\").click()",
+                    "    time.sleep(1)\n    page.get_by_role(\"button\", name=\"关闭\").click()",
+                    "    time.sleep(1)\n    page.get_by_role(\"row\", name=\"1002 南方创新基金 南方基金 李娜 2000.0000 8.00 160.00 查看画像 删除\").get_by_role(\"button\", name=\"查看画像\").click()",
+                    "    time.sleep(1)\n    page.get_by_role(\"button\", name=\"关闭\").click()",
+                    "    time.sleep(1)\n    page.get_by_text(\"因子管理\").click()",
+                    "    time.sleep(1)\n    page.get_by_role(\"treeitem\", name=\"质量因子-ROE\").locator(\"label\").click()",
+                    "    time.sleep(1)\n    page.get_by_role(\"treeitem\", name=\"质量因子-毛利率\").locator(\"label\").click()",
+                    "    time.sleep(1)\n    page.get_by_role(\"treeitem\", name=\"估值因子-市净率\").locator(\"label\").click()",
+                    "    time.sleep(1)\n    page.get_by_role(\"button\", name=\"输出选中项\").click()",
+                    "    time.sleep(1)\n    page.get_by_placeholder(\"请输入衍生因子名称\").click()",
+                    "    time.sleep(1)\n    page.get_by_placeholder(\"请输入衍生因子名称\").fill(\"yy\")",
+                    "    time.sleep(1)\n    page.locator(\"#el-id-5781-35\").click()",
+                    "    time.sleep(1)\n    page.get_by_role(\"button\", name=\"increase number\").first.click()",
+                    "    time.sleep(1)\n    page.locator(\"#el-id-5781-35\").click()",
+                    "    time.sleep(1)\n    page.locator(\"#el-id-5781-35\").click()",
+                    "    time.sleep(1)\n    page.locator(\"#el-id-5781-35\").click()",
+                    "    time.sleep(1)\n    page.locator(\"#el-id-5781-35\").press(\"ArrowRight\")",
+                    "    time.sleep(1)\n    page.locator(\"#el-id-5781-35\").fill(\"20\")",
+                    "    time.sleep(1)\n    page.locator(\"#el-id-5781-36\").click()",
+                    "    time.sleep(1)\n    page.locator(\"#el-id-5781-36\").press(\"ArrowRight\")",
+                    "    time.sleep(1)\n    page.locator(\"#el-id-5781-36\").fill(\"30\")",
+                    "    time.sleep(1)\n    page.locator(\"#el-id-5781-37\").click()",
+                    "    time.sleep(1)\n    page.locator(\"#el-id-5781-37\").press(\"ArrowRight\")",
+                    "    time.sleep(1)\n    page.locator(\"#el-id-5781-37\").fill(\"30\")",
+                    "    time.sleep(1)\n    page.locator(\"#el-id-5781-38\").click()",
+                    "    time.sleep(1)\n    page.locator(\"#el-id-5781-38\").press(\"ArrowRight\")",
+                    "    time.sleep(1)\n    page.locator(\"#el-id-5781-38\").fill(\"10\")",
+                    "    time.sleep(1)\n    page.locator(\"#el-id-5781-39\").click()",
+                    "    time.sleep(1)\n    page.locator(\"#el-id-5781-39\").press(\"ArrowRight\")",
+                    "    time.sleep(1)\n    page.locator(\"#el-id-5781-39\").fill(\"10\")",
+                    "    time.sleep(1)\n    page.locator(\"div:nth-child(6) > div:nth-child(2)\").click()",
+                    "    time.sleep(1)\n    page.locator(\"#el-id-5781-39\").click()",
+                    "    time.sleep(1)\n    page.get_by_role(\"button\", name=\"decrease number\").nth(4).click()",
+                    "    time.sleep(1)\n    page.get_by_role(\"button\", name=\"确定\").click()",
+                    "    time.sleep(1)\n    page.get_by_role(\"menuitem\", name=\"策略管理\").click()",
+                    "    time.sleep(1)\n    page.locator(\"#el-id-5781-40\").click()",
+                    "    time.sleep(1)\n    page.locator(\"#el-id-5781-40\").click()",
+                    "    time.sleep(1)\n    page.locator(\"#el-id-5781-40\").press(\"ArrowRight\")",
+                    "    time.sleep(1)\n    page.locator(\"#el-id-5781-40\").fill(\"60\")",
+                    "    time.sleep(1)\n    page.locator(\"#el-id-5781-41\").click()",
+                    "    time.sleep(1)\n    page.locator(\"#el-id-5781-41\").press(\"ArrowRight\")",
+                    "    time.sleep(1)\n    page.locator(\"#el-id-5781-41\").fill(\"40\")",
+                    "    time.sleep(1)\n    page.get_by_role(\"row\", name=\"1002 南方创新基金 decrease number increase number\").get_by_role(\"button\", name=\"increase number\").click()",
+                    "    time.sleep(1)\n    page.get_by_role(\"row\", name=\"1002 南方创新基金 decrease number increase number\").get_by_role(\"button\", name=\"decrease number\").click()",
+                    "    time.sleep(1)\n    page.get_by_role(\"button\", name=\"保存配置\").click()",
+                    "    time.sleep(1)\n    page.get_by_role(\"button\", name=\"下一步\").click()",
+                    "    time.sleep(1)\n    page.get_by_role(\"cell\", name=\"52周新高,相对强度,ROE,资产负债率,市盈率\").click()",
+                    "    time.sleep(1)\n    page.get_by_role(\"row\", name=\"1 a 52周新高,相对强度,ROE,资产负债率,市盈率 10,80,5,4,1\").locator(\"span\").nth(1).click()",
+                    "    time.sleep(1)\n    page.get_by_role(\"button\", name=\"保存选择\").click()",
+                    "    time.sleep(1)\n    page.get_by_role(\"button\", name=\"下一步\").click()",
+                    "    time.sleep(1)\n    page.get_by_placeholder(\"请输入基金组合名称\").click()",
+                    "    time.sleep(1)\n    page.get_by_placeholder(\"请输入基金组合名称\").fill(\"xxxx\")",
+                    "    time.sleep(1)\n    page.get_by_text(\"基金组合配置基金组合名称当前配置基金编号基金名称权重 (%)1001华夏成长基金601002南方创新基金40衍生因子方案方案名称因子组合因子权重a52周新高,相\").click()",
+                    "    time.sleep(1)\n    page.get_by_role(\"button\", name=\"保存组合\").click()",
+                    "    time.sleep(1)\n    page.get_by_role(\"button\", name=\"保存组合\").click()",
+                    "    time.sleep(1)\n    page.get_by_role(\"button\", name=\"返回\").click()",
+                    "    time.sleep(1)\n    page.get_by_text(\"组合产品管理\").click()",
+                    "    time.sleep(1)\n    page.get_by_role(\"row\", name=\"ff a 1 审核中 高风险 xxxx 编辑\").get_by_role(\"button\", name=\"编辑\").click()",
+                    "    time.sleep(1)\n    page.get_by_label(\"描述\").click()",
+                    "    time.sleep(1)\n    page.get_by_role(\"dialog\", name=\"编辑产品信息\").locator(\"div\").filter(has_text=re.compile(r\"^高风险$\")).nth(2).click()",
+                    "    time.sleep(1)\n    page.get_by_role(\"option\", name=\"中风险\").click()",
+                    "    time.sleep(1)\n    page.get_by_label(\"风险等级\").click()",
+                    "    time.sleep(1)\n    page.get_by_role(\"option\", name=\"高风险\").click()",
+                    "    time.sleep(1)\n    page.get_by_role(\"button\", name=\"提交\").click()",
+                    "    time.sleep(1)\n    page.get_by_role(\"row\", name=\"FoF产品A DF产品X 1 已上架 中风险 这是一个混合型投资组合，适合中等风险承受能力的投资者 编辑\").get_by_role(\"button\", name=\"编辑\").click()",
+                    "    time.sleep(1)\n    page.get_by_label(\"风险等级\").click()",
+                    "    time.sleep(1)\n    page.get_by_role(\"option\", name=\"低风险\").click()",
+                    "    time.sleep(1)\n    page.get_by_role(\"button\", name=\"提交\").click()",
+                    "    time.sleep(1)\n    page.get_by_role(\"menuitem\", name=\"用户管理\").click()",
+                    "    time.sleep(1)\n    page.get_by_role(\"row\", name=\"1 请输入用户名 请输入密码 保存\").get_by_placeholder(\"请输入用户名\").click()",
+                    "    time.sleep(1)\n    page.get_by_role(\"row\", name=\"1 请输入用户名 请输入密码 保存\").get_by_placeholder(\"请输入用户名\").click()",
+                    "    time.sleep(1)\n    page.get_by_role(\"row\", name=\"1 请输入用户名 请输入密码 保存\").get_by_placeholder(\"请输入用户名\").fill(\"john_doe\")",
+                    "    time.sleep(1)\n    page.locator(\"html\").click()",
+                    "    page.close()"
+                ]
+            },
+            "name": "事务",
+            "type": 1,
+            "output": {}
+        },
+        {
+            "children": [
+                {
+                    "children": [
+                        {
+                            "children": [],
+                            "cmdType": "httpRequest",
+                            "haveChild": false,
+                            "id": "93fc2af5-eb78-448b-8a55-b406c06328e6",
+                            "input": {
+                                "haritem": {
+                                    "pageref": "fundResearch",
+                                    "request": {
+                                        "method": "GET",
+                                        "url": "http://localhost:5173/src/views/FundResearch.vue?vue&type=style&index=0&scoped=54efbc23&lang.css",
+                                        "httpVersion": "HTTP/1.1",
+                                        "cookies": [],
+                                        "headers": [
+                                            {
+                                                "name": "Accept",
+                                                "value": "*/*"
+                                            },
+                                            {
+                                                "name": "Accept-Language",
+                                                "value": "zh-CN,zh;q=0.9"
+                                            },
+                                            {
+                                                "name": "Connection",
+                                                "value": "keep-alive"
+                                            },
+                                            {
+                                                "name": "Host",
+                                                "value": "localhost:5173"
+                                            },
+                                            {
+                                                "name": "Origin",
+                                                "value": "http://localhost:5173"
+                                            },
+                                            {
+                                                "name": "Referer",
+                                                "value": "http://localhost:5173/src/views/FundResearch.vue"
+                                            },
+                                            {
+                                                "name": "Sec-Fetch-Dest",
+                                                "value": "script"
+                                            },
+                                            {
+                                                "name": "Sec-Fetch-Mode",
+                                                "value": "cors"
+                                            },
+                                            {
+                                                "name": "Sec-Fetch-Site",
+                                                "value": "same-origin"
+                                            },
+                                            {
+                                                "name": "User-Agent",
+                                                "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36"
+                                            },
+                                            {
+                                                "name": "sec-ch-ua",
+                                                "value": "\"Not.A/Brand\";v=\"8\", \"Chromium\";v=\"114\""
+                                            },
+                                            {
+                                                "name": "sec-ch-ua-mobile",
+                                                "value": "?0"
+                                            },
+                                            {
+                                                "name": "sec-ch-ua-platform",
+                                                "value": "\"Windows\""
+                                            }
+                                        ],
+                                        "queryString": [
+                                            {
+                                                "name": "vue",
+                                                "value": ""
+                                            },
+                                            {
+                                                "name": "type",
+                                                "value": "style"
+                                            },
+                                            {
+                                                "name": "index",
+                                                "value": "0"
+                                            },
+                                            {
+                                                "name": "scoped",
+                                                "value": "54efbc23"
+                                            },
+                                            {
+                                                "name": "lang.css",
+                                                "value": ""
+                                            }
+                                        ],
+                                        "headersSize": 565,
+                                        "bodySize": 0
+                                    },
+                                    "response": {
+                                        "status": 200,
+                                        "statusText": "OK",
+                                        "httpVersion": "HTTP/1.1",
+                                        "headers": [
+                                            {
+                                                "name": "Access-Control-Allow-Origin",
+                                                "value": "*"
+                                            },
+                                            {
+                                                "name": "Cache-Control",
+                                                "value": "no-cache"
+                                            },
+                                            {
+                                                "name": "Connection",
+                                                "value": "keep-alive"
+                                            },
+                                            {
+                                                "name": "Content-Length",
+                                                "value": "2448"
+                                            },
+                                            {
+                                                "name": "Content-Type",
+                                                "value": "text/javascript"
+                                            },
+                                            {
+                                                "name": "Date",
+                                                "value": "Tue, 01 Jul 2025 15:09:25 GMT"
+                                            },
+                                            {
+                                                "name": "Etag",
+                                                "value": "W/\"990-HqmKLlLc9KOoScWdPH/DRs3nZv0\""
+                                            },
+                                            {
+                                                "name": "Keep-Alive",
+                                                "value": "timeout=5"
+                                            }
+                                        ],
+                                        "content": {
+                                            "compression": 0,
+                                            "mimeType": "text/javascript",
+                                            "size": 2448,
+                                            "text": "import { createHotContext as __vite__createHotContext } from \"/@vite/client\";import.meta.hot = __vite__createHotContext(\"/src/views/FundResearch.vue?vue&type=style&index=0&scoped=54efbc23&lang.css\");import { updateStyle as __vite__updateStyle, removeStyle as __vite__removeStyle } from \"/@vite/client\"\nconst __vite__id = \"C:/Users/12061/Documents/WeChat Files/wxid_imprurswffug22/FileStorage/File/2025-07/vue_demo/src/views/FundResearch.vue?vue&type=style&index=0&scoped=54efbc23&lang.css\"\nconst __vite__css = \"\\n.fund-research-container[data-v-54efbc23] {\\r\\n  padding: 20px;\\r\\n  background-color: #fff;\\r\\n  border-radius: 4px;\\r\\n  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);\\n}\\n.page-header[data-v-54efbc23] {\\r\\n  display: flex;\\r\\n  justify-content: space-between;\\r\\n  align-items: center;\\r\\n  margin-bottom: 20px;\\n}\\n.page-title[data-v-54efbc23] {\\r\\n  margin: 0;\\r\\n  color: #303133;\\n}\\n.search-container[data-v-54efbc23] {\\r\\n  display: flex;\\r\\n  flex-wrap: wrap;\\r\\n  gap: 15px;\\r\\n  margin-bottom: 20px;\\n}\\n.search-item[data-v-54efbc23] {\\r\\n  flex: 1;\\r\\n  min-width: 200px;\\n}\\n.search-buttons[data-v-54efbc23] {\\r\\n  display: flex;\\r\\n  align-items: center;\\r\\n  gap: 10px;\\n}\\n.table-container[data-v-54efbc23] {\\r\\n  margin-top: 20px;\\n}\\n.pagination-container[data-v-54efbc23] {\\r\\n  margin-top: 20px;\\r\\n  display: flex;\\r\\n  justify-content: flex-end;\\n}\\n.positive[data-v-54efbc23] {\\r\\n  color: #f56c6c;\\n}\\n.negative[data-v-54efbc23] {\\r\\n  color: #67c23a;\\n}\\n.fund-info-content[data-v-54efbc23] {\\r\\n  white-space: pre-wrap;\\r\\n  line-height: 1.6;\\r\\n  max-height: 60vh;\\r\\n  overflow-y: auto;\\r\\n  padding: 0 10px;\\n}\\n.filter-content[data-v-54efbc23] {\\r\\n  max-height: 60vh;\\r\\n  overflow-y: auto;\\r\\n  padding: 0 10px;\\n}\\n.filter-section[data-v-54efbc23] {\\r\\n  margin-bottom: 20px;\\n}\\n.filter-section h3[data-v-54efbc23] {\\r\\n  margin-bottom: 15px;\\r\\n  color: #303133;\\r\\n  border-bottom: 1px solid #ebeef5;\\r\\n  padding-bottom: 10px;\\n}\\n.filter-group[data-v-54efbc23] {\\r\\n  margin-bottom: 15px;\\n}\\n.filter-group h4[data-v-54efbc23] {\\r\\n  margin: 0 0 10px 0;\\r\\n  font-size: 14px;\\r\\n  color: #606266;\\n}\\n.el-radio-group[data-v-54efbc23] {\\r\\n  display: flex;\\r\\n  flex-wrap: wrap;\\r\\n  gap: 10px;\\n}\\n[data-v-54efbc23] .el-table .cell {\\r\\n  white-space: nowrap;\\n}\\r\\n\"\n__vite__updateStyle(__vite__id, __vite__css)\nimport.meta.hot.accept()\nimport.meta.hot.prune(() => __vite__removeStyle(__vite__id))"
+                                        },
+                                        "cookies": [],
+                                        "redirectURL": "",
+                                        "headersSize": 256,
+                                        "bodySize": 2448
+                                    },
+                                    "cache": {},
+                                    "timings": {
+                                        "send": -1.0,
+                                        "receive": 0.619,
+                                        "wait": 0.613,
+                                        "connect": -1.0,
+                                        "ssl": -1.0,
+                                        "blocked": -1.0,
+                                        "dns": -1.0
+                                    },
+                                    "time": 1.232,
+                                    "serverIPAddress": "[::1]",
+                                    "startedDateTime": "2025-07-01T15:09:25.718Z"
+                                },
+                                "headers": [],
+                                "method": "GET",
+                                "queryString": [
+                                    {
+                                        "name": "vue",
+                                        "value": ""
+                                    },
+                                    {
+                                        "name": "type",
+                                        "value": "style"
+                                    },
+                                    {
+                                        "name": "index",
+                                        "value": "0"
+                                    },
+                                    {
+                                        "name": "scoped",
+                                        "value": "54efbc23"
+                                    },
+                                    {
+                                        "name": "lang.css",
+                                        "value": ""
+                                    }
+                                ],
+                                "postData": {},
+                                "url": "http://localhost:5173/src/views/FundResearch.vue?vue&type=style&index=0&scoped=54efbc23&lang.css"
+                            },
+                            "name": "GET请求",
+                            "output": {
+                                "cmdId": "",
+                                "cmdName": ""
+                            },
+                            "type": 3
+                        }
+                    ],
+                    "cmdType": "task",
+                    "haveChild": true,
+                    "id": "05df42a5-001b-40ac-b437-24eb0ab674cf",
+                    "input": {
+                        "name": "1"
+                    },
+                    "name": "任务",
+                    "type": 2,
+                    "output": {}
+                },
+                {
+                    "children": [
+                        {
+                            "children": [],
+                            "cmdType": "httpRequest",
+                            "haveChild": false,
+                            "id": "495b0a54-d9c1-4727-9f1d-532e2ca9391e",
+                            "input": {
+                                "haritem": {
+                                    "pageref": "fundResearch",
+                                    "request": {
+                                        "method": "GET",
+                                        "url": "http://localhost:8080/fund/checkInFOF?id=1&fundcode=1001",
+                                        "httpVersion": "HTTP/1.1",
+                                        "cookies": [],
+                                        "headers": [
+                                            {
+                                                "name": "Accept",
+                                                "value": "application/json, text/plain, */*"
+                                            },
+                                            {
+                                                "name": "Accept-Language",
+                                                "value": "zh-CN,zh;q=0.9"
+                                            },
+                                            {
+                                                "name": "Connection",
+                                                "value": "keep-alive"
+                                            },
+                                            {
+                                                "name": "Host",
+                                                "value": "localhost:8080"
+                                            },
+                                            {
+                                                "name": "Origin",
+                                                "value": "http://localhost:5173"
+                                            },
+                                            {
+                                                "name": "Referer",
+                                                "value": "http://localhost:5173/"
+                                            },
+                                            {
+                                                "name": "Sec-Fetch-Dest",
+                                                "value": "empty"
+                                            },
+                                            {
+                                                "name": "Sec-Fetch-Mode",
+                                                "value": "cors"
+                                            },
+                                            {
+                                                "name": "Sec-Fetch-Site",
+                                                "value": "same-site"
+                                            },
+                                            {
+                                                "name": "User-Agent",
+                                                "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36"
+                                            },
+                                            {
+                                                "name": "sec-ch-ua",
+                                                "value": "\"Not.A/Brand\";v=\"8\", \"Chromium\";v=\"114\""
+                                            },
+                                            {
+                                                "name": "sec-ch-ua-mobile",
+                                                "value": "?0"
+                                            },
+                                            {
+                                                "name": "sec-ch-ua-platform",
+                                                "value": "\"Windows\""
+                                            }
+                                        ],
+                                        "queryString": [
+                                            {
+                                                "name": "id",
+                                                "value": "1"
+                                            },
+                                            {
+                                                "name": "fundcode",
+                                                "value": "1001"
+                                            }
+                                        ],
+                                        "headersSize": 555,
+                                        "bodySize": 0
+                                    },
+                                    "response": {
+                                        "status": 200,
+                                        "statusText": "",
+                                        "httpVersion": "HTTP/1.1",
+                                        "headers": [
+                                            {
+                                                "name": "Access-Control-Allow-Origin",
+                                                "value": "*"
+                                            },
+                                            {
+                                                "name": "Connection",
+                                                "value": "keep-alive"
+                                            },
+                                            {
+                                                "name": "Content-Type",
+                                                "value": "application/json"
+                                            },
+                                            {
+                                                "name": "Date",
+                                                "value": "Tue, 01 Jul 2025 15:09:25 GMT"
+                                            },
+                                            {
+                                                "name": "Keep-Alive",
+                                                "value": "timeout=60"
+                                            },
+                                            {
+                                                "name": "Transfer-Encoding",
+                                                "value": "chunked"
+                                            },
+                                            {
+                                                "name": "Vary",
+                                                "value": "Origin"
+                                            },
+                                            {
+                                                "name": "Vary",
+                                                "value": "Access-Control-Request-Method"
+                                            },
+                                            {
+                                                "name": "Vary",
+                                                "value": "Access-Control-Request-Headers"
+                                            }
+                                        ],
+                                        "content": {
+                                            "compression": 0,
+                                            "mimeType": "application/json",
+                                            "size": 1,
+                                            "text": "1"
+                                        },
+                                        "cookies": [],
+                                        "redirectURL": "",
+                                        "headersSize": 282,
+                                        "bodySize": 12
+                                    },
+                                    "cache": {},
+                                    "timings": {
+                                        "send": -1.0,
+                                        "receive": 2.487,
+                                        "wait": 3.013,
+                                        "connect": -1.0,
+                                        "ssl": -1.0,
+                                        "blocked": -1.0,
+                                        "dns": -1.0
+                                    },
+                                    "time": 5.5,
+                                    "serverIPAddress": "[::1]",
+                                    "startedDateTime": "2025-07-01T15:09:25.865Z"
+                                },
+                                "headers": [],
+                                "method": "GET",
+                                "queryString": [
+                                    {
+                                        "name": "id",
+                                        "value": "1"
+                                    },
+                                    {
+                                        "name": "fundcode",
+                                        "value": "1001"
+                                    }
+                                ],
+                                "postData": {},
+                                "url": "http://localhost:8080/fund/checkInFOF?id=1&fundcode=1001"
+                            },
+                            "name": "GET请求",
+                            "output": {
+                                "cmdId": "",
+                                "cmdName": ""
+                            },
+                            "type": 3
+                        }
+                    ],
+                    "cmdType": "task",
+                    "haveChild": true,
+                    "id": "9bb07bb1-ba3c-4d44-a541-61c4a7ad2767",
+                    "input": {
+                        "name": "2"
+                    },
+                    "name": "任务",
+                    "type": 2,
+                    "output": {}
+                }
+            ],
+            "cmdType": "transaction",
+            "haveChild": true,
+            "id": "8130944f-49ba-4d2e-958d-1414d7c9368b",
+            "input": {
+                "mode": "SerialTransaction",
+                "name": "fundResearch",
+                "ratio": "1",
+                "type": "normal",
+                "enableWaitEvent": false,
+                "waitEvent": {
+                    "name": "wait",
+                    "ratio": 1,
+                    "timeout": 3000
+                },
+                "rpacodes": ""
+            },
+            "name": "事务",
+            "type": 1,
+            "output": {}
+        },
+        {
+            "children": [
+                {
+                    "children": [
+                        {
+                            "children": [],
+                            "cmdType": "httpRequest",
+                            "haveChild": false,
+                            "id": "af0a4676-e786-48a3-b60c-1c41f3149f59",
+                            "input": {
+                                "haritem": {
+                                    "pageref": "factorManage",
+                                    "request": {
+                                        "method": "POST",
+                                        "url": "http://localhost:8080/factors/add",
+                                        "httpVersion": "HTTP/1.1",
+                                        "cookies": [],
+                                        "headers": [
+                                            {
+                                                "name": "Accept",
+                                                "value": "application/json, text/plain, */*"
+                                            },
+                                            {
+                                                "name": "Accept-Language",
+                                                "value": "zh-CN,zh;q=0.9"
+                                            },
+                                            {
+                                                "name": "Connection",
+                                                "value": "keep-alive"
+                                            },
+                                            {
+                                                "name": "Content-Length",
+                                                "value": "118"
+                                            },
+                                            {
+                                                "name": "Content-Type",
+                                                "value": "application/json"
+                                            },
+                                            {
+                                                "name": "Host",
+                                                "value": "localhost:8080"
+                                            },
+                                            {
+                                                "name": "Origin",
+                                                "value": "http://localhost:5173"
+                                            },
+                                            {
+                                                "name": "Referer",
+                                                "value": "http://localhost:5173/"
+                                            },
+                                            {
+                                                "name": "Sec-Fetch-Dest",
+                                                "value": "empty"
+                                            },
+                                            {
+                                                "name": "Sec-Fetch-Mode",
+                                                "value": "cors"
+                                            },
+                                            {
+                                                "name": "Sec-Fetch-Site",
+                                                "value": "same-site"
+                                            },
+                                            {
+                                                "name": "User-Agent",
+                                                "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36"
+                                            },
+                                            {
+                                                "name": "sec-ch-ua",
+                                                "value": "\"Not.A/Brand\";v=\"8\", \"Chromium\";v=\"114\""
+                                            },
+                                            {
+                                                "name": "sec-ch-ua-mobile",
+                                                "value": "?0"
+                                            },
+                                            {
+                                                "name": "sec-ch-ua-platform",
+                                                "value": "\"Windows\""
+                                            }
+                                        ],
+                                        "queryString": [],
+                                        "postData": {
+                                            "mimeType": "application/json",
+                                            "params": [],
+                                            "text": "{\"dfname\":\"yy\",\"id\":1,\"factornames\":\"52周新高,ROE,毛利率,历史波动率,市净率\",\"percents\":\"20,30,30,10,10\"}"
+                                        },
+                                        "headersSize": 605,
+                                        "bodySize": 118
+                                    },
+                                    "response": {
+                                        "status": 201,
+                                        "statusText": "",
+                                        "httpVersion": "HTTP/1.1",
+                                        "headers": [
+                                            {
+                                                "name": "Access-Control-Allow-Origin",
+                                                "value": "*"
+                                            },
+                                            {
+                                                "name": "Connection",
+                                                "value": "keep-alive"
+                                            },
+                                            {
+                                                "name": "Content-Length",
+                                                "value": "24"
+                                            },
+                                            {
+                                                "name": "Content-Type",
+                                                "value": "application/json"
+                                            },
+                                            {
+                                                "name": "Date",
+                                                "value": "Tue, 01 Jul 2025 15:11:40 GMT"
+                                            },
+                                            {
+                                                "name": "Keep-Alive",
+                                                "value": "timeout=60"
+                                            },
+                                            {
+                                                "name": "Vary",
+                                                "value": "Origin"
+                                            },
+                                            {
+                                                "name": "Vary",
+                                                "value": "Access-Control-Request-Method"
+                                            },
+                                            {
+                                                "name": "Vary",
+                                                "value": "Access-Control-Request-Headers"
+                                            }
+                                        ],
+                                        "content": {
+                                            "compression": 0,
+                                            "mimeType": "application/json",
+                                            "size": 24,
+                                            "text": "衍生因子创建成功"
+                                        },
+                                        "cookies": [],
+                                        "redirectURL": "",
+                                        "headersSize": 274,
+                                        "bodySize": 25
+                                    },
+                                    "cache": {},
+                                    "timings": {
+                                        "send": -1.0,
+                                        "receive": 3.005,
+                                        "wait": 56.617,
+                                        "connect": -1.0,
+                                        "ssl": -1.0,
+                                        "blocked": -1.0,
+                                        "dns": -1.0
+                                    },
+                                    "time": 59.622,
+                                    "serverIPAddress": "[::1]",
+                                    "startedDateTime": "2025-07-01T15:11:40.826Z"
+                                },
+                                "headers": [],
+                                "method": "POST",
+                                "queryString": [],
+                                "postData": {
+                                    "mimeType": "application/json",
+                                    "params": [],
+                                    "text": "{\"dfname\":\"yy\",\"id\":1,\"factornames\":\"52周新高,ROE,毛利率,历史波动率,市净率\",\"percents\":\"20,30,30,10,10\"}"
+                                },
+                                "url": "http://localhost:8080/factors/add"
+                            },
+                            "name": "POST请求",
+                            "output": {
+                                "cmdId": "",
+                                "cmdName": ""
+                            },
+                            "type": 3
+                        }
+                    ],
+                    "cmdType": "task",
+                    "haveChild": true,
+                    "id": "be4234bf-cdb8-4f0d-baa9-8bad1f65226c",
+                    "input": {
+                        "name": "3"
+                    },
+                    "name": "任务",
+                    "type": 2,
+                    "output": {}
+                }
+            ],
+            "cmdType": "transaction",
+            "haveChild": true,
+            "id": "40a296cd-fc2f-48d0-b08e-00472c95e0a1",
+            "input": {
+                "mode": "SerialTransaction",
+                "name": "factorManage",
+                "ratio": "1",
+                "type": "normal",
+                "enableWaitEvent": false,
+                "waitEvent": {
+                    "name": "wait",
+                    "ratio": 1,
+                    "timeout": 3000
+                },
+                "rpacodes": ""
+            },
+            "name": "事务",
+            "type": 1,
+            "output": {}
+        },
+        {
+            "children": [
+                {
+                    "children": [
+                        {
+                            "children": [],
+                            "cmdType": "httpRequest",
+                            "haveChild": false,
+                            "id": "6513adaf-b1f2-4f97-9db6-8ba45cbf0e42",
+                            "input": {
+                                "haritem": {
+                                    "pageref": "strategyManage",
+                                    "request": {
+                                        "method": "POST",
+                                        "url": "http://localhost:8080/strategy/save",
+                                        "httpVersion": "HTTP/1.1",
+                                        "cookies": [],
+                                        "headers": [
+                                            {
+                                                "name": "Accept",
+                                                "value": "application/json, text/plain, */*"
+                                            },
+                                            {
+                                                "name": "Accept-Language",
+                                                "value": "zh-CN,zh;q=0.9"
+                                            },
+                                            {
+                                                "name": "Connection",
+                                                "value": "keep-alive"
+                                            },
+                                            {
+                                                "name": "Content-Length",
+                                                "value": "77"
+                                            },
+                                            {
+                                                "name": "Content-Type",
+                                                "value": "application/json"
+                                            },
+                                            {
+                                                "name": "Host",
+                                                "value": "localhost:8080"
+                                            },
+                                            {
+                                                "name": "Origin",
+                                                "value": "http://localhost:5173"
+                                            },
+                                            {
+                                                "name": "Referer",
+                                                "value": "http://localhost:5173/"
+                                            },
+                                            {
+                                                "name": "Sec-Fetch-Dest",
+                                                "value": "empty"
+                                            },
+                                            {
+                                                "name": "Sec-Fetch-Mode",
+                                                "value": "cors"
+                                            },
+                                            {
+                                                "name": "Sec-Fetch-Site",
+                                                "value": "same-site"
+                                            },
+                                            {
+                                                "name": "User-Agent",
+                                                "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36"
+                                            },
+                                            {
+                                                "name": "sec-ch-ua",
+                                                "value": "\"Not.A/Brand\";v=\"8\", \"Chromium\";v=\"114\""
+                                            },
+                                            {
+                                                "name": "sec-ch-ua-mobile",
+                                                "value": "?0"
+                                            },
+                                            {
+                                                "name": "sec-ch-ua-platform",
+                                                "value": "\"Windows\""
+                                            }
+                                        ],
+                                        "queryString": [],
+                                        "postData": {
+                                            "mimeType": "application/json",
+                                            "params": [],
+                                            "text": "[{\"id\":1,\"fundcode\":1001,\"percent\":60},{\"id\":1,\"fundcode\":1002,\"percent\":40}]"
+                                        },
+                                        "headersSize": 606,
+                                        "bodySize": 77
+                                    },
+                                    "response": {
+                                        "status": 200,
+                                        "statusText": "",
+                                        "httpVersion": "HTTP/1.1",
+                                        "headers": [
+                                            {
+                                                "name": "Access-Control-Allow-Origin",
+                                                "value": "*"
+                                            },
+                                            {
+                                                "name": "Connection",
+                                                "value": "keep-alive"
+                                            },
+                                            {
+                                                "name": "Content-Type",
+                                                "value": "application/json"
+                                            },
+                                            {
+                                                "name": "Date",
+                                                "value": "Tue, 01 Jul 2025 15:12:24 GMT"
+                                            },
+                                            {
+                                                "name": "Keep-Alive",
+                                                "value": "timeout=60"
+                                            },
+                                            {
+                                                "name": "Transfer-Encoding",
+                                                "value": "chunked"
+                                            },
+                                            {
+                                                "name": "Vary",
+                                                "value": "Origin"
+                                            },
+                                            {
+                                                "name": "Vary",
+                                                "value": "Access-Control-Request-Method"
+                                            },
+                                            {
+                                                "name": "Vary",
+                                                "value": "Access-Control-Request-Headers"
+                                            }
+                                        ],
+                                        "content": {
+                                            "compression": 0,
+                                            "mimeType": "application/json",
+                                            "size": 1,
+                                            "text": "1"
+                                        },
+                                        "cookies": [],
+                                        "redirectURL": "",
+                                        "headersSize": 282,
+                                        "bodySize": 12
+                                    },
+                                    "cache": {},
+                                    "timings": {
+                                        "send": -1.0,
+                                        "receive": 2.981,
+                                        "wait": 11.447,
+                                        "connect": -1.0,
+                                        "ssl": -1.0,
+                                        "blocked": -1.0,
+                                        "dns": -1.0
+                                    },
+                                    "time": 14.427999999999999,
+                                    "serverIPAddress": "[::1]",
+                                    "startedDateTime": "2025-07-01T15:12:24.678Z"
+                                },
+                                "headers": [],
+                                "method": "POST",
+                                "queryString": [],
+                                "postData": {
+                                    "mimeType": "application/json",
+                                    "params": [],
+                                    "text": "[{\"id\":1,\"fundcode\":1001,\"percent\":60},{\"id\":1,\"fundcode\":1002,\"percent\":40}]"
+                                },
+                                "url": "http://localhost:8080/strategy/save"
+                            },
+                            "name": "POST请求",
+                            "output": {
+                                "cmdId": "",
+                                "cmdName": ""
+                            },
+                            "type": 3
+                        }
+                    ],
+                    "cmdType": "task",
+                    "haveChild": true,
+                    "id": "e2a8e626-b20c-4bd4-a340-ee15a63133b8",
+                    "input": {
+                        "name": "4"
+                    },
+                    "name": "任务",
+                    "type": 2,
+                    "output": {}
+                },
+                {
+                    "children": [
+                        {
+                            "children": [],
+                            "cmdType": "httpRequest",
+                            "haveChild": false,
+                            "id": "101aec2d-5e6d-4f8d-9cb0-7c230b20967a",
+                            "input": {
+                                "haritem": {
+                                    "pageref": "strategyManage",
+                                    "request": {
+                                        "method": "POST",
+                                        "url": "http://localhost:8080/strategy/updateFofname",
+                                        "httpVersion": "HTTP/1.1",
+                                        "cookies": [],
+                                        "headers": [
+                                            {
+                                                "name": "Accept",
+                                                "value": "application/json, text/plain, */*"
+                                            },
+                                            {
+                                                "name": "Accept-Language",
+                                                "value": "zh-CN,zh;q=0.9"
+                                            },
+                                            {
+                                                "name": "Connection",
+                                                "value": "keep-alive"
+                                            },
+                                            {
+                                                "name": "Content-Length",
+                                                "value": "25"
+                                            },
+                                            {
+                                                "name": "Content-Type",
+                                                "value": "application/json"
+                                            },
+                                            {
+                                                "name": "Host",
+                                                "value": "localhost:8080"
+                                            },
+                                            {
+                                                "name": "Origin",
+                                                "value": "http://localhost:5173"
+                                            },
+                                            {
+                                                "name": "Referer",
+                                                "value": "http://localhost:5173/"
+                                            },
+                                            {
+                                                "name": "Sec-Fetch-Dest",
+                                                "value": "empty"
+                                            },
+                                            {
+                                                "name": "Sec-Fetch-Mode",
+                                                "value": "cors"
+                                            },
+                                            {
+                                                "name": "Sec-Fetch-Site",
+                                                "value": "same-site"
+                                            },
+                                            {
+                                                "name": "User-Agent",
+                                                "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36"
+                                            },
+                                            {
+                                                "name": "sec-ch-ua",
+                                                "value": "\"Not.A/Brand\";v=\"8\", \"Chromium\";v=\"114\""
+                                            },
+                                            {
+                                                "name": "sec-ch-ua-mobile",
+                                                "value": "?0"
+                                            },
+                                            {
+                                                "name": "sec-ch-ua-platform",
+                                                "value": "\"Windows\""
+                                            }
+                                        ],
+                                        "queryString": [],
+                                        "postData": {
+                                            "mimeType": "application/json",
+                                            "params": [],
+                                            "text": "{\"id\":1,\"fofname\":\"xxxx\"}"
+                                        },
+                                        "headersSize": 615,
+                                        "bodySize": 25
+                                    },
+                                    "response": {
+                                        "status": 200,
+                                        "statusText": "",
+                                        "httpVersion": "HTTP/1.1",
+                                        "headers": [
+                                            {
+                                                "name": "Access-Control-Allow-Origin",
+                                                "value": "*"
+                                            },
+                                            {
+                                                "name": "Connection",
+                                                "value": "keep-alive"
+                                            },
+                                            {
+                                                "name": "Content-Type",
+                                                "value": "application/json"
+                                            },
+                                            {
+                                                "name": "Date",
+                                                "value": "Tue, 01 Jul 2025 15:12:44 GMT"
+                                            },
+                                            {
+                                                "name": "Keep-Alive",
+                                                "value": "timeout=60"
+                                            },
+                                            {
+                                                "name": "Transfer-Encoding",
+                                                "value": "chunked"
+                                            },
+                                            {
+                                                "name": "Vary",
+                                                "value": "Origin"
+                                            },
+                                            {
+                                                "name": "Vary",
+                                                "value": "Access-Control-Request-Method"
+                                            },
+                                            {
+                                                "name": "Vary",
+                                                "value": "Access-Control-Request-Headers"
+                                            }
+                                        ],
+                                        "content": {
+                                            "compression": 0,
+                                            "mimeType": "application/json",
+                                            "size": 1,
+                                            "text": "1"
+                                        },
+                                        "cookies": [],
+                                        "redirectURL": "",
+                                        "headersSize": 282,
+                                        "bodySize": 12
+                                    },
+                                    "cache": {},
+                                    "timings": {
+                                        "send": -1.0,
+                                        "receive": 0.747,
+                                        "wait": 3.389,
+                                        "connect": -1.0,
+                                        "ssl": -1.0,
+                                        "blocked": -1.0,
+                                        "dns": -1.0
+                                    },
+                                    "time": 4.136,
+                                    "serverIPAddress": "[::1]",
+                                    "startedDateTime": "2025-07-01T15:12:44.155Z"
+                                },
+                                "headers": [],
+                                "method": "POST",
+                                "queryString": [],
+                                "postData": {
+                                    "mimeType": "application/json",
+                                    "params": [],
+                                    "text": "{\"id\":1,\"fofname\":\"xxxx\"}"
+                                },
+                                "url": "http://localhost:8080/strategy/updateFofname"
+                            },
+                            "name": "POST请求",
+                            "output": {
+                                "cmdId": "",
+                                "cmdName": ""
+                            },
+                            "type": 3
+                        }
+                    ],
+                    "cmdType": "task",
+                    "haveChild": true,
+                    "id": "8171a5a6-5e08-41d7-89cf-918602a44b0c",
+                    "input": {
+                        "name": "5"
+                    },
+                    "name": "任务",
+                    "type": 2,
+                    "output": {}
+                }
+            ],
+            "cmdType": "transaction",
+            "haveChild": true,
+            "id": "1f5d4dcb-4f61-4785-8ca5-86366c5305e1",
+            "input": {
+                "mode": "SerialTransaction",
+                "name": "strategyManage",
+                "ratio": "1",
+                "type": "normal",
+                "enableWaitEvent": false,
+                "waitEvent": {
+                    "name": "wait",
+                    "ratio": 1,
+                    "timeout": 3000
+                },
+                "rpacodes": ""
+            },
+            "name": "事务",
+            "type": 1,
+            "output": {}
+        },
+        {
+            "children": [
+                {
+                    "children": [
+                        {
+                            "children": [],
+                            "cmdType": "httpRequest",
+                            "haveChild": false,
+                            "id": "50e081e1-16b2-49d9-905b-56dae7936126",
+                            "input": {
+                                "haritem": {
+                                    "pageref": "productManage",
+                                    "request": {
+                                        "method": "GET",
+                                        "url": "http://localhost:8080/product/all?id=1",
+                                        "httpVersion": "HTTP/1.1",
+                                        "cookies": [],
+                                        "headers": [
+                                            {
+                                                "name": "Accept",
+                                                "value": "*/*"
+                                            },
+                                            {
+                                                "name": "Accept-Language",
+                                                "value": "zh-CN,zh;q=0.9"
+                                            },
+                                            {
+                                                "name": "Connection",
+                                                "value": "keep-alive"
+                                            },
+                                            {
+                                                "name": "Host",
+                                                "value": "localhost:8080"
+                                            },
+                                            {
+                                                "name": "Origin",
+                                                "value": "http://localhost:5173"
+                                            },
+                                            {
+                                                "name": "Referer",
+                                                "value": "http://localhost:5173/"
+                                            },
+                                            {
+                                                "name": "Sec-Fetch-Dest",
+                                                "value": "empty"
+                                            },
+                                            {
+                                                "name": "Sec-Fetch-Mode",
+                                                "value": "cors"
+                                            },
+                                            {
+                                                "name": "Sec-Fetch-Site",
+                                                "value": "same-site"
+                                            },
+                                            {
+                                                "name": "User-Agent",
+                                                "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36"
+                                            },
+                                            {
+                                                "name": "sec-ch-ua",
+                                                "value": "\"Not.A/Brand\";v=\"8\", \"Chromium\";v=\"114\""
+                                            },
+                                            {
+                                                "name": "sec-ch-ua-mobile",
+                                                "value": "?0"
+                                            },
+                                            {
+                                                "name": "sec-ch-ua-platform",
+                                                "value": "\"Windows\""
+                                            }
+                                        ],
+                                        "queryString": [
+                                            {
+                                                "name": "id",
+                                                "value": "1"
+                                            }
+                                        ],
+                                        "headersSize": 521,
+                                        "bodySize": 0
+                                    },
+                                    "response": {
+                                        "status": 200,
+                                        "statusText": "",
+                                        "httpVersion": "HTTP/1.1",
+                                        "headers": [
+                                            {
+                                                "name": "Access-Control-Allow-Origin",
+                                                "value": "*"
+                                            },
+                                            {
+                                                "name": "Connection",
+                                                "value": "keep-alive"
+                                            },
+                                            {
+                                                "name": "Content-Type",
+                                                "value": "application/json"
+                                            },
+                                            {
+                                                "name": "Date",
+                                                "value": "Tue, 01 Jul 2025 15:13:14 GMT"
+                                            },
+                                            {
+                                                "name": "Keep-Alive",
+                                                "value": "timeout=60"
+                                            },
+                                            {
+                                                "name": "Transfer-Encoding",
+                                                "value": "chunked"
+                                            },
+                                            {
+                                                "name": "Vary",
+                                                "value": "Origin"
+                                            },
+                                            {
+                                                "name": "Vary",
+                                                "value": "Access-Control-Request-Method"
+                                            },
+                                            {
+                                                "name": "Vary",
+                                                "value": "Access-Control-Request-Headers"
+                                            }
+                                        ],
+                                        "content": {
+                                            "compression": 0,
+                                            "mimeType": "application/json",
+                                            "size": 378,
+                                            "text": "[{\"fofname\":\"ff\",\"dfname\":\"a\",\"id\":1,\"status\":\"审核中\",\"risk\":\"高风险\",\"description\":\"xxxx\"},{\"fofname\":\"FoF产品A\",\"dfname\":\"DF产品X\",\"id\":1,\"status\":\"已上架\",\"risk\":\"中风险\",\"description\":\"这是一个混合型投资组合，适合中等风险承受能力的投资者\"},{\"fofname\":\"xxxx\",\"dfname\":\"a\",\"id\":1,\"status\":\"未上架\",\"risk\":null,\"description\":null}]"
+                                        },
+                                        "cookies": [],
+                                        "redirectURL": "",
+                                        "headersSize": 282,
+                                        "bodySize": 391
+                                    },
+                                    "cache": {},
+                                    "timings": {
+                                        "send": -1.0,
+                                        "receive": 0.823,
+                                        "wait": 5.515,
+                                        "connect": 0.635,
+                                        "ssl": 1.876,
+                                        "blocked": -1.0,
+                                        "dns": 0.008
+                                    },
+                                    "time": 8.857,
+                                    "serverIPAddress": "[::1]",
+                                    "startedDateTime": "2025-07-01T15:13:14.665Z"
+                                },
+                                "headers": [],
+                                "method": "GET",
+                                "queryString": [
+                                    {
+                                        "name": "id",
+                                        "value": "1"
+                                    }
+                                ],
+                                "postData": {},
+                                "url": "http://localhost:8080/product/all?id=1"
+                            },
+                            "name": "GET请求",
+                            "output": {
+                                "cmdId": "",
+                                "cmdName": ""
+                            },
+                            "type": 3
+                        }
+                    ],
+                    "cmdType": "task",
+                    "haveChild": true,
+                    "id": "e6e76066-c2d5-4a60-ad34-70174fb4b9e6",
+                    "input": {
+                        "name": "6"
+                    },
+                    "name": "任务",
+                    "type": 2,
+                    "output": {}
+                }
+            ],
+            "cmdType": "transaction",
+            "haveChild": true,
+            "id": "0eefb95f-68ef-4b3f-8bdf-b092e3c3988c",
+            "input": {
+                "mode": "SerialTransaction",
+                "name": "productManage",
+                "ratio": "1",
+                "type": "normal",
+                "enableWaitEvent": false,
+                "waitEvent": {
+                    "name": "wait",
+                    "ratio": 1,
+                    "timeout": 3000
+                },
+                "rpacodes": ""
+            },
+            "name": "事务",
+            "type": 1,
+            "output": {}
+        },
+        {
+            "children": [
+                {
+                    "children": [
+                        {
+                            "children": [],
+                            "cmdType": "httpRequest",
+                            "haveChild": false,
+                            "id": "74109c49-ab7e-4982-aa9f-bffc9c9ad95a",
+                            "input": {
+                                "haritem": {
+                                    "pageref": "userManage",
+                                    "request": {
+                                        "method": "GET",
+                                        "url": "http://localhost:5173/src/views/UserManagement.vue?vue&type=style&index=0&scoped=18622dc2&lang.css",
+                                        "httpVersion": "HTTP/1.1",
+                                        "cookies": [],
+                                        "headers": [
+                                            {
+                                                "name": "Accept",
+                                                "value": "*/*"
+                                            },
+                                            {
+                                                "name": "Accept-Language",
+                                                "value": "zh-CN,zh;q=0.9"
+                                            },
+                                            {
+                                                "name": "Connection",
+                                                "value": "keep-alive"
+                                            },
+                                            {
+                                                "name": "Host",
+                                                "value": "localhost:5173"
+                                            },
+                                            {
+                                                "name": "Origin",
+                                                "value": "http://localhost:5173"
+                                            },
+                                            {
+                                                "name": "Referer",
+                                                "value": "http://localhost:5173/src/views/UserManagement.vue"
+                                            },
+                                            {
+                                                "name": "Sec-Fetch-Dest",
+                                                "value": "script"
+                                            },
+                                            {
+                                                "name": "Sec-Fetch-Mode",
+                                                "value": "cors"
+                                            },
+                                            {
+                                                "name": "Sec-Fetch-Site",
+                                                "value": "same-origin"
+                                            },
+                                            {
+                                                "name": "User-Agent",
+                                                "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36"
+                                            },
+                                            {
+                                                "name": "sec-ch-ua",
+                                                "value": "\"Not.A/Brand\";v=\"8\", \"Chromium\";v=\"114\""
+                                            },
+                                            {
+                                                "name": "sec-ch-ua-mobile",
+                                                "value": "?0"
+                                            },
+                                            {
+                                                "name": "sec-ch-ua-platform",
+                                                "value": "\"Windows\""
+                                            }
+                                        ],
+                                        "queryString": [
+                                            {
+                                                "name": "vue",
+                                                "value": ""
+                                            },
+                                            {
+                                                "name": "type",
+                                                "value": "style"
+                                            },
+                                            {
+                                                "name": "index",
+                                                "value": "0"
+                                            },
+                                            {
+                                                "name": "scoped",
+                                                "value": "18622dc2"
+                                            },
+                                            {
+                                                "name": "lang.css",
+                                                "value": ""
+                                            }
+                                        ],
+                                        "headersSize": 569,
+                                        "bodySize": 0
+                                    },
+                                    "response": {
+                                        "status": 200,
+                                        "statusText": "OK",
+                                        "httpVersion": "HTTP/1.1",
+                                        "headers": [
+                                            {
+                                                "name": "Access-Control-Allow-Origin",
+                                                "value": "*"
+                                            },
+                                            {
+                                                "name": "Cache-Control",
+                                                "value": "no-cache"
+                                            },
+                                            {
+                                                "name": "Connection",
+                                                "value": "keep-alive"
+                                            },
+                                            {
+                                                "name": "Content-Length",
+                                                "value": "773"
+                                            },
+                                            {
+                                                "name": "Content-Type",
+                                                "value": "text/javascript"
+                                            },
+                                            {
+                                                "name": "Date",
+                                                "value": "Tue, 01 Jul 2025 15:13:44 GMT"
+                                            },
+                                            {
+                                                "name": "Etag",
+                                                "value": "W/\"305-Ot0q+Fv/EMFXS5NHn+eOr3dd8SE\""
+                                            },
+                                            {
+                                                "name": "Keep-Alive",
+                                                "value": "timeout=5"
+                                            }
+                                        ],
+                                        "content": {
+                                            "compression": 0,
+                                            "mimeType": "text/javascript",
+                                            "size": 773,
+                                            "text": "import { createHotContext as __vite__createHotContext } from \"/@vite/client\";import.meta.hot = __vite__createHotContext(\"/src/views/UserManagement.vue?vue&type=style&index=0&scoped=18622dc2&lang.css\");import { updateStyle as __vite__updateStyle, removeStyle as __vite__removeStyle } from \"/@vite/client\"\nconst __vite__id = \"C:/Users/12061/Documents/WeChat Files/wxid_imprurswffug22/FileStorage/File/2025-07/vue_demo/src/views/UserManagement.vue?vue&type=style&index=0&scoped=18622dc2&lang.css\"\nconst __vite__css = \"\\n.user-manage-container[data-v-18622dc2] {\\r\\n  padding: 20px;\\n}\\n.el-table[data-v-18622dc2] {\\r\\n  margin-top: 20px;\\n}\\r\\n\"\n__vite__updateStyle(__vite__id, __vite__css)\nimport.meta.hot.accept()\nimport.meta.hot.prune(() => __vite__removeStyle(__vite__id))"
+                                        },
+                                        "cookies": [],
+                                        "redirectURL": "",
+                                        "headersSize": 255,
+                                        "bodySize": 773
+                                    },
+                                    "cache": {},
+                                    "timings": {
+                                        "send": -1.0,
+                                        "receive": 0.625,
+                                        "wait": 0.782,
+                                        "connect": -1.0,
+                                        "ssl": -1.0,
+                                        "blocked": -1.0,
+                                        "dns": -1.0
+                                    },
+                                    "time": 1.407,
+                                    "serverIPAddress": "[::1]",
+                                    "startedDateTime": "2025-07-01T15:13:44.332Z"
+                                },
+                                "headers": [],
+                                "method": "GET",
+                                "queryString": [
+                                    {
+                                        "name": "vue",
+                                        "value": ""
+                                    },
+                                    {
+                                        "name": "type",
+                                        "value": "style"
+                                    },
+                                    {
+                                        "name": "index",
+                                        "value": "0"
+                                    },
+                                    {
+                                        "name": "scoped",
+                                        "value": "18622dc2"
+                                    },
+                                    {
+                                        "name": "lang.css",
+                                        "value": ""
+                                    }
+                                ],
+                                "postData": {},
+                                "url": "http://localhost:5173/src/views/UserManagement.vue?vue&type=style&index=0&scoped=18622dc2&lang.css"
+                            },
+                            "name": "GET请求",
+                            "output": {
+                                "cmdId": "",
+                                "cmdName": ""
+                            },
+                            "type": 3
+                        }
+                    ],
+                    "cmdType": "task",
+                    "haveChild": true,
+                    "id": "4050389b-5d05-49b3-b81d-05ec5bcd44ed",
+                    "input": {
+                        "name": "7"
+                    },
+                    "name": "任务",
+                    "type": 2,
+                    "output": {}
+                }
+            ],
+            "cmdType": "transaction",
+            "haveChild": true,
+            "id": "2328e711-e63f-46af-b071-0bd4187fa8a7",
+            "input": {
+                "mode": "SerialTransaction",
+                "name": "userManage",
+                "ratio": "1",
+                "type": "normal",
+                "enableWaitEvent": false,
+                "waitEvent": {
+                    "name": "wait",
+                    "ratio": 1,
+                    "timeout": 3000
+                },
+                "rpacodes": ""
+            },
+            "name": "事务",
+            "type": 1,
+            "output": {}
+        }
+    ],
+    "repository": "",
+    "project": "智能投顾系统",
+    "description": "",
+    "script_path": null,
+    "client_protocol": "",
+    "create_by": null,
+    "update_by": null,
+    "id": "2e42465c-568f-11f0-b9b1-749779e3cc4a",
+    "projectUrl": "http://118.202.10.218:50000/filestorage/editor/智能投顾系统/智能投顾系统.json",
+    "projectPyCodeUrl": "http://118.202.10.218:50000/filestorage/editor/智能投顾系统/智能投顾系统.py",
+    "project_records": "http://118.202.10.218:50000/filestorage/editor/智能投顾系统/智能投顾系统.py.records.json",
+    "project_report": "http://118.202.10.218:50000/filestorage/editor/智能投顾系统/智能投顾系统/guirunner/log.html",
+    "pyfilePath": "editor/智能投顾系统/智能投顾系统.py",
+    "protocolUrl": "http://118.202.10.218:50000/filestorage/editor/智能投顾系统/智能投顾系统.json",
+    "protocolfilePath": "/editor/智能投顾系统/智能投顾系统.json",
+    "harUrl": "http://118.202.10.218:50000/filestorage/editor/智能投顾系统/智能投顾系统.har",
+    "harfilePath": "/editor/智能投顾系统/智能投顾系统.har"
+}
